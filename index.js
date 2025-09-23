@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 10000;
 
 // Middlewares
 app.use(cors({
-  origin: "https://68d2a970e5fb77ff50e37f96--remarkable-fudge-3e223f.netlify.app/" // o mejor, tu URL de Netlify
+  origin: "*" // o mejor, tu URL de Netlify
 }));
 app.use(bodyParser.json());
 
