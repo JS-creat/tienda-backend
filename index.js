@@ -23,6 +23,6 @@ app.use('/imagenes', imagenesRoutes);
 app.use('/usuarios', usuariosRoutes);  
 
 // Iniciar servidor
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
 });
