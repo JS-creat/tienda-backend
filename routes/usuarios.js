@@ -34,27 +34,36 @@ router.post("/registro", async (req, res) => {
   try {
     const { nombre, correo, contraseña } = req.body;
 
+    console.log("📥 Datos recibidos:", req.body);
+
     if (!nombre || !correo || !contraseña) {
+      console.log("❌ Faltan campos");
       return res.status(400).json({ message: "Todos los campos son obligatorios" });
     }
 
-    // Verificar si ya existe el correo
+    console.log("🔍 Revisando si existe el correo...");
     const [existe] = await db.query("SELECT * FROM usuarios WHERE correo = ?", [correo]);
+    console.log("Resultado SELECT:", existe);
+
     if (existe.length > 0) {
+      console.log("⚠️ Correo ya registrado");
       return res.status(400).json({ message: "El correo ya está registrado" });
     }
 
-    // Guardar usuario
-    await db.query(
+    console.log("📝 Insertando en DB...");
+    const [result] = await db.query(
       "INSERT INTO usuarios (nombre, correo, contraseña) VALUES (?, ?, ?)",
-      [nombre, correo, contraseña] // ⚠️ Luego podemos encriptar la contraseña con bcrypt
+      [nombre, correo, contraseña]
     );
+    console.log("✅ Insertado:", result);
 
-    res.status(201).json({ message: "Usuario registrado correctamente" });
+    return res.status(201).json({ message: "Usuario registrado correctamente" });
+
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Error al registrar usuario" });
+    console.error("💥 ERROR en /usuarios/registro:", err); // 👀
+    return res.status(500).json({ message: "Error al registrar usuario", error: err.message });
   }
 });
+
 
 module.exports = router;
