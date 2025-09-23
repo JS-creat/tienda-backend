@@ -4,7 +4,7 @@ const cors = require('cors');
 const app = express();
 
 // Render asigna el puerto automáticamente
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 1000;
 
 // Middlewares
 app.use(cors());
