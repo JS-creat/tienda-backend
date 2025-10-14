@@ -1,3 +1,4 @@
+const path = require('path');
 require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -7,11 +8,11 @@ const app = express();
 // Render asigna el puerto automáticamente
 const PORT = process.env.PORT || 10000;
 
-const allowedOrigin = 'https://admirable-fudge-d69549.netlify.app'; // Cambia a tu URL de Netlify
+const allowedOrigin = 'https://admirable-fudge-d69549.netlify.app'; 
 
 // Middlewares
 app.use(cors({
-  origin: allowedOrigin // o mejor, tu URL de Netlify "*"
+  origin: allowedOrigin // URL de Netlify "*"
 }));
 app.use(bodyParser.json());
 
@@ -44,6 +45,14 @@ app.use('/categorias', categoriasRoutes);
 app.use('/productos', productosRoutes);
 app.use('/imagenes', imagenesRoutes);
 app.use('/usuarios', usuariosRoutes);  
+
+// Servir frontend estático después de rutas API
+app.use(express.static(path.join(__dirname, 'frontend/build')));
+
+// Para cualquier otra ruta (no API), enviar el index.html del frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
+});
 
 // Iniciar servidor
 app.listen(PORT, "0.0.0.0", () => {
