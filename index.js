@@ -7,11 +7,26 @@ const app = express();
 // Render asigna el puerto automáticamente
 const PORT = process.env.PORT || 10000;
 
+const allowedOrigin = 'https://admirable-fudge-d69549.netlify.app'; // Cambia a tu URL de Netlify
+
 // Middlewares
 app.use(cors({
-  origin: "*" // o mejor, tu URL de Netlify
+  origin: allowedOrigin // o mejor, tu URL de Netlify "*"
 }));
 app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  let clientIP = req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress;
+  if (clientIP && clientIP.includes(',')) {
+    clientIP = clientIP.split(',')[0].trim();
+  }
+
+  if (clientIP === '45.232.149.130') {
+    next();
+  } else {
+    res.status(403).json({ message: 'Acceso denegado: IP no permitida' });
+  }
+});
 
 // === Documentación Swagger ===
 const { swaggerUi, swaggerSpecs } = require('./swagger');
