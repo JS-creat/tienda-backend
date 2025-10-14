@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
   const { url, producto_id } = req.body;
   try {
     const [result] = await db.query(
-      'INSERT INTO imagenes (url, producto_id) VALUES (?, ?)',
+      'INSERT INTO imagenes_productos (url, producto_id) VALUES (?, ?)',
       [url, producto_id]
     );
     res.json({ id: result.insertId, url, producto_id });
