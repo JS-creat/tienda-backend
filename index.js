@@ -21,13 +21,13 @@ app.use((req, res, next) => {
     clientIP = clientIP.split(',')[0].trim();
   }
 
-  if (clientIP === '45.232.149.130') {
+  const allowedIPs = ['45.232.149.130', '45.232.149.146', '45.232.149.145']; 
+  if (allowedIPs.includes(clientIP)) {
     next();
   } else {
     res.status(403).json({ message: 'Acceso denegado: IP no permitida' });
   }
 });
-
 // === Documentación Swagger ===
 const { swaggerUi, swaggerSpecs } = require('./swagger');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
