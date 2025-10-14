@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -11,6 +12,11 @@ app.use(cors({
   origin: "*" // o mejor, tu URL de Netlify
 }));
 app.use(bodyParser.json());
+
+// === Documentación Swagger ===
+const { swaggerUi, swaggerSpecs } = require('./swagger');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+
 
 // Importar rutas
 const categoriasRoutes = require('./routes/categorias');
@@ -27,4 +33,5 @@ app.use('/usuarios', usuariosRoutes);
 // Iniciar servidor
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log(`Documentación disponible en http://localhost:${PORT}/api-docs`);
 });
