@@ -28,7 +28,7 @@ const db = require('../db');
 router.get('/:producto_id', async (req, res) => {
   const { producto_id } = req.params;
   try {
-    const [rows] = await db.query('SELECT * FROM imagenes WHERE producto_id = ?', [producto_id]);
+    const [rows] = await db.query('SELECT * FROM imagenes_productos WHERE producto_id = ?', [producto_id]);
     res.json(rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
