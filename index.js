@@ -15,6 +15,8 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 
+//IPs validas 
+/*
 app.use((req, res, next) => {
   let clientIP = req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress;
   if (clientIP && clientIP.includes(',')) {
@@ -28,6 +30,8 @@ app.use((req, res, next) => {
     res.status(403).json({ message: 'Acceso denegado: IP no permitida' });
   }
 });
+*/
+
 // === Documentación Swagger ===
 const { swaggerUi, swaggerSpecs } = require('./swagger');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
