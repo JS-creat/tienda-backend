@@ -16,21 +16,20 @@ app.use(cors({
 app.use(bodyParser.json());
 
 //IPs validas 
-/*
 app.use((req, res, next) => {
   let clientIP = req.headers['x-forwarded-for'] || req.ip || req.connection.remoteAddress;
   if (clientIP && clientIP.includes(',')) {
     clientIP = clientIP.split(',')[0].trim();
   }
 
-  const allowedIPs = ['45.232.149.130', '45.232.149.146', '45.232.149.145', '181.176.103.153']; 
+  const allowedIPs = ['45.232.149.130', '45.232.149.146', '45.232.149.145']; 
   if (allowedIPs.includes(clientIP)) {
     next();
   } else {
     res.status(403).json({ message: 'Acceso denegado: IP no permitida' });
   }
 });
-*/
+
 
 // === Documentación Swagger ===
 const { swaggerUi, swaggerSpecs } = require('./swagger');
